@@ -6,6 +6,6 @@ export const  store1 = configureStore(
         reducer:{
             student:studentReducer,
         },
-        devTools:true
+        // devTools:true
     }
 )

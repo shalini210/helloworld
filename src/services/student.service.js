@@ -1,21 +1,23 @@
 import http from "../http-common"
-class StudentDataService {
+class StudentDataService
+{
     getAll()
     {
-
-        // console.log("in getall")
-            return http.get("/")
+        return http.get("student/")
     }
-    create(data){
-        return http.post("/",data)
+    create(data)
+    {
+        console.log(data)
+        return http.post("student/",data)
     }
     update(id,data)
     {
-        return http.put(`/{$id}`,data)
+        return http.put(`student/{$id}`,data)
     }
-    delete(id)
+    delete($id)
     {
-        return http.delete(`/{$id}`)
+        return http.delete(`student/{$id}`);
+
     }
 }
 export default new StudentDataService();

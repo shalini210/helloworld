@@ -1,60 +1,63 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
-import StudentDataService from "../services/student.service";
-// import { createSlice } from "@reduxjs/toolkit/dist/createSlice";
+// import {  } from "@reduxjs/toolkit";
+import studentService from "../services/student.service";
 const initialState=[];
 // {
-//     name:'abc',
-//     email:'ds',
-//     age:0,
-//     id:0,
-//     studentlist:[{sname:'fsd'}]
-// }
- 
-export const createStudent =createAsyncThunk("/create",async({sname,email})=>
-    {
-        const res =await StudentDataService.create({sname,email});
-        return res.data;
-    })
+//     list:
+//     [{"_id":"demo","sname":"John","semail":"jk@ldfl12","sage":412,"__v":0}]}
+
 export const select = createAsyncThunk("/select",async()=>
 {
-    const res = await StudentDataService.getAll();
-    return res.data
-
-})
-export const deletestudent = createAsyncThunk("/delete",async({id})=>
-{
-    const res = await StudentDataService.delete(id)
+    const res = await studentService.getAll();
     return res.data;
+})
+export const createStudent = createAsyncThunk("/create",async(data)=>
+{
+
+    // console.log("name is ",data.sname,"email ",data.semail)
+    const res = await studentService.create(data);
+    return res.data;
+})
+export const deleteStudent = createAsyncThunk("/delete",async({id})=>
+{
+    const res = await studentService.delete(id);
+    return res.data
 })
 export const updateStudent = createAsyncThunk("/update",async({id,data})=>
 {
-    const res = await StudentDataService.update(id,data);
-    return res.data;
+    const res = await studentService.update(id,data)
+    return res.data
 })
-const baseURL = "http://localhost:8080/student";
 
 export const studentSlice = createSlice(
     {
-        name:"student",
+        name:'student',
         initialState,
         extraReducers:{
             [createStudent.fulfilled]:(state,action)=>
             {
-                // state=(action.payload);
+                console.log("added")
+                console.log(action.payload);
+              
+               
             },
             [select.fulfilled]:(state,action)=>
             {
-                // console.log("full")
-                // console.log(action.payload.data)
-                return [...action.payload.data]
-            //    []
+                console.log("promise fullfilled")
+                console.log(action.payload.data);
+               return [...action.payload.data]
+            //   return {
+            //     ...state,
+            //     value:action.payload.data
+            //   }
+                // return state;
+            },
+            [select.pending]:(state,action)=>
+            {
+                console.log("promise pending");
             }
         }
-       
     }
 )
-// export const {addstudent,deletestudent,updatestudent,selectall}=studentSlice.actions
-// export const {selectall}=studentSlice.actions;
-// export default   studentSlice.reducer;
 const {reducer} = studentSlice;
 export default reducer;
