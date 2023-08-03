@@ -5,6 +5,15 @@ import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {store1} from './store';
+import { DataTable } from 'primereact/datatable';
+// import "primereact/resources/themes/bootstrap4-dark-blue"
+// import 'primereact/resources/themes/lara-light-indigo/theme.css';   // theme
+import 'primereact/resources/primereact.css';                       // core css
+import 'primeicons/primeicons.css';                                 // icons
+import 'primeflex/primeflex.css';                                   // css utility
+import 'react-bootstrap'
+// import './index.css';
+// import './flags.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

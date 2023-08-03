@@ -5,7 +5,8 @@ import { createStudent } from "../slices/studentslice";
 import { useRef } from "react";
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-         
+// import Table from 'react-bootstrap/Table';
+import { Table } from "react-bootstrap";
 export default function StudentComponent()
 {
     const nameRef = useRef("");
@@ -22,6 +23,18 @@ export default function StudentComponent()
         dispatch(select())  
     }
     const student = useSelector((state)=>state.student)
+    let rows = student.map((data)=>
+    {
+        return(
+        <tr>
+          <td>{data.sname}</td>
+          <td>{data.semail}</td>
+          <td>{data.sage}</td>
+          <td><input type="button" value="edit"></input></td>
+          <td><input type="button" value="delete"></input></td>
+          {/* <td>@mdo</td> */}
+        </tr>)
+    })
     return(
         <>
         <p>
@@ -41,12 +54,33 @@ export default function StudentComponent()
         <h4>working in student component</h4>
         {/* {JSON.stringify(student)}
          */}
-         <DataTable  value={student} stripedRows  tableStyle={{ minWidth: '50rem' }}>
+         <div className="card">
+         <Table striped bordered hover size="sm">
+      <thead>
+        <tr>
+          
+          <th> Name</th>
+          <th>email</th>
+          <th>age</th>
+          <th>edit</th>
+          <th>delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows}
+       
+      
+      </tbody>
+    </Table>
+         {/* <DataTable  value={student} 
+         
+            tableStyle={{ minWidth: '50rem' }}>
     <Column field="sname" header="Student Name"></Column>
     <Column field="semail" header="Email"></Column>
     <Column field="sage" header="Age"></Column>
-    {/* <Column field="quantity" header="Quantity"></Column> */}
-</DataTable>
+    
+ </DataTable>  */}
+</div>
         </>
     )
 }
