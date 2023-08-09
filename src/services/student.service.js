@@ -14,9 +14,9 @@ class StudentDataService
     {
         return http.put(`student/{$id}`,data)
     }
-    delete($id)
+    delete(id)
     {
-        return http.delete(`student/{$id}`);
+        return http.delete("student/"+id);
 
     }
 }

@@ -18,7 +18,7 @@ export const createStudent = createAsyncThunk("/create",async(data)=>
     const res = await studentService.create(data);
     return res.data;
 })
-export const deleteStudent = createAsyncThunk("/delete",async({id})=>
+export const deleteStudent = createAsyncThunk("/delete",async(id)=>
 {
     const res = await studentService.delete(id);
     return res.data
@@ -55,7 +55,14 @@ export const studentSlice = createSlice(
             [select.pending]:(state,action)=>
             {
                 console.log("promise pending");
-            }
+            },
+            [deleteStudent.fulfilled]:(state,action)=>
+            {
+                console.log("deleted")
+                console.log(action.payload);
+              
+               
+            },
         }
     }
 )
