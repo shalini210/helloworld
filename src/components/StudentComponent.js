@@ -1,6 +1,6 @@
 import { useEffect,useState } from "react"
 import { useSelector,useDispatch } from "react-redux/es/exports"
-import { select } from "../slices/studentslice";
+import { select, updateStudent } from "../slices/studentslice";
 import { createStudent,deleteStudent } from "../slices/studentslice";
 import { useRef } from "react";
 import { DataTable } from 'primereact/datatable';
@@ -13,6 +13,7 @@ export default function StudentComponent()
   const upnameRef = useRef("");
   const upageRef = useRef("");
   const upemailRef = useRef("");
+  const idRef = useRef("");
   const [show, setShow] = useState(false);
 const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
   const handleClose = () => setShow(false);
@@ -40,7 +41,7 @@ const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
     upnameRef.current.value=studentup.sname;
         upageRef.current.value=studentup.sage;
         upemailRef.current.value=studentup.semail;
-
+          idRef.current.value=studentup._id;
         }
     },[show])  
     const AddStudent =()=>{
@@ -49,12 +50,25 @@ const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
         "age":ageRef.current.value}));
         dispatch(select())  
     }
+    const UpdateStudent=()=>
+    {
+      const d = {"name":upnameRef.current.value,
+      "email":upemailRef.current.value,
+      "age":upageRef.current.value};
+     const id = idRef.current.value;
+     console.log(id)
+     console.log(d)
+      dispatch(updateStudent({id,d}));
+      dispatch(select())
+      handleClose()
+    }
     const DeleteStudent=(id)=>{
       if(window.confirm("Are you sure want to delete?"))
       {     
        const r = dispatch(deleteStudent(id))
-      alert(r);
-    dispatch(select())      }
+      
+    dispatch(select())    
+    }
       else
       {
       console.log("use said no ");
@@ -97,7 +111,7 @@ const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" ref={idRef} onClick={()=>UpdateStudent()}>
             Save Changes
           </Button>
         </Modal.Footer>

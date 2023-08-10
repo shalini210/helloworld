@@ -10,9 +10,10 @@ class StudentDataService
         console.log(data)
         return http.post("student/",data)
     }
-    update(id,data)
-    {
-        return http.put(`student/{$id}`,data)
+    update(x)
+    {console.log("Data is")
+        console.log(x.d)
+        return http.put(`student/`+x.id,x.d)
     }
     delete(id)
     {

@@ -23,9 +23,10 @@ export const deleteStudent = createAsyncThunk("/delete",async(id)=>
     const res = await studentService.delete(id);
     return res.data
 })
-export const updateStudent = createAsyncThunk("/update",async({id,data})=>
+export const updateStudent = createAsyncThunk("/update",async(x)=>
 {
-    const res = await studentService.update(id,data)
+    console.log(x)
+    const res = await studentService.update(x)
     return res.data
 })
 
