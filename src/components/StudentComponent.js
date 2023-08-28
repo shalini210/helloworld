@@ -8,13 +8,14 @@ import { Column } from 'primereact/column';
 // import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
 import { Button, Table } from "react-bootstrap";
-export default function StudentComponent()
+export default function StudentComponent(props)
 {
   const upnameRef = useRef("");
   const upageRef = useRef("");
   const upemailRef = useRef("");
   const idRef = useRef("");
   const [show, setShow] = useState(false);
+  const [Ishow, IsetShow] = useState(false);
 const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
   const handleClose = () => setShow(false);
   const handleShow = (d) =>
@@ -24,6 +25,14 @@ const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
     
    
   }// setShow(true);
+  const IhandleClose = () => IsetShow(false);
+  const IhandleShow = () =>
+  {
+    // setStudentup(d);
+    IsetShow(true);
+    
+   
+  }
 
 
      
@@ -49,6 +58,7 @@ const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
         "email":emailRef.current.value,
         "age":ageRef.current.value}));
         dispatch(select())  
+        IhandleClose()
     }
     const UpdateStudent=()=>
     {
@@ -89,6 +99,8 @@ const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
     })
     return(
         <>
+        <input type="button" value="logout" onClick={()=>{sessionStorage.removeItem("email");props.changeState("")}}/>
+        <h1>{localStorage.getItem("email")}</h1>
          <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Edit Student Details</Modal.Title>
@@ -116,7 +128,35 @@ const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
           </Button>
         </Modal.Footer>
       </Modal>
+      ................
+      <Modal show={Ishow} onHide={IhandleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add Student Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
         <p>
+            Enter name:
+            <input type="text"  ref={nameRef} />
+        </p>
+        <p>
+            Enter email:
+            <input type="text"  ref={emailRef}/>
+        </p>
+        <p>
+            Enter age:
+            <input type="text" ref={ageRef}/>
+        </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={IhandleClose}>
+            Close
+          </Button>
+          <Button variant="primary" ref={idRef} onClick={()=>AddStudent()}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+        {/* <p>
             Enter name:
             <input type="text" ref={nameRef} />
         </p>
@@ -129,8 +169,9 @@ const [studentup,setStudentup] =  useState({sname:"",semail:"",sage:"",_id:""});
             <input type="text" ref={ageRef}/>
         </p>
         
-        <input type="button" value="add" onClick={()=>AddStudent()}/>
+        <input type="button" value="add" onClick={()=>AddStudent()}/> */}
         <h4>working in student component</h4>
+        <Button variant="warning" onClick={IhandleShow}>Add new student</Button>
         {/* {JSON.stringify(student)}
          */}
          <div className="card">
